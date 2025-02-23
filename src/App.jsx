@@ -5,8 +5,9 @@ import { Cart } from "./Components/NavElements/Cart";
 import { Search } from "./Components/NavElements/Search";
 import { ErrorComponent } from "./Components/NavElements/ErrorComponent";
 import { createBrowserRouter } from "react-router-dom";
-import './index.css'; 
 import { Outlet } from "react-router-dom";
+import { Checkout } from "./Checkout";
+import './index.css'; 
 
 export const App = ()=>{
   return (
@@ -14,7 +15,6 @@ export const App = ()=>{
     <section className="pt-5 pl-20 pr-20">
       <Header/>
       <Outlet/>
-      
     </section>
     
   )
@@ -40,6 +40,10 @@ export const appRouter = createBrowserRouter([
       {
         path:'/search',
         element:<Search/>
+      },
+      {
+        path:'/checkout/:parameter',
+        element:<Checkout/>
       }
     ],
     errorElement : <ErrorComponent/>

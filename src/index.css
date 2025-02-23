@@ -20,3 +20,6 @@
 .hero-h{
     @apply font-pop text-yellow-600;
 }
+.shimmer-ui{
+    @apply bg-slate-200 rounded-xl h-[200px] animate-bounce;
+}

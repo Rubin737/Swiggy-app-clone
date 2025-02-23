@@ -58,3 +58,5 @@ export const foodItems = [
   },
 ];
 
+export const MENU_API =
+  "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=13.0843007&lng=80.2704622&restaurantId=";

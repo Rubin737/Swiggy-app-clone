@@ -2,12 +2,13 @@ import rightArrow from '../assets/rightA.png';
 import leftArrow from '../assets/leftA.png';
 import { foodItems } from "../../utils/menu";
 import { useState } from "react";
+import { Link } from 'react-router-dom';
 
 export const Hero = () => {
     const [currIntex, setCurIntex] = useState(0);
     const selectedItem = foodItems[currIntex];
     const [bgClr, setBgclr] = useState(0); 
-    const [bodyClr, setBodyClr] = useState('bg-green-400');
+    const [bodyClr, setBodyClr] = useState('bg-pink-100');
 
     console.log(currIntex);
 
@@ -33,14 +34,14 @@ export const Hero = () => {
 
     return (
         <section className="pb-10">
-            <section className={`flex my-5 py-10 px-5 justify-between border items-center rounded-2xl ${bodyClr}`}>
+            <section className={`flex my-5 py-10 px-5 justify-between items-center rounded-2xl ${bodyClr}`}>
                 <div className="w-[50%] flex flex-col ml-10 gap-2">
                     <h1 className="font-pop text-6xl font-extrabold">Fastest <span className="hero-h">Delivery</span> and Easy<span className="hero-h"> Pickup</span></h1>
                     <h1 className="font-lora text-3xl">{selectedItem.name}</h1>
                     <h1 className="text-xl">{selectedItem.slogan}</h1>
                     <p className="text-sm">{selectedItem.description}</p>
                     <div className="flex gap-4 mt-2">
-                        <button className="text-lg font-bold text-black bg-orange-400 px-5 py-2">Order now</button>
+                        <Link to={'/checkout/'+selectedItem.id} ><button className="text-lg font-bold text-black bg-orange-400 px-5 py-2">Order now</button></Link>
                         <div>
                             <p className="font-bold text-xl">Price</p>
                             <p>₹{selectedItem.price}</p>

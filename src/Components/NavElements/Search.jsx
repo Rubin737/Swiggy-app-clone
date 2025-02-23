@@ -4,16 +4,22 @@ import search from '../../assets/search.png';
 import { catagory } from "../../../utils/catagory";
 import { useState } from "react";
 import emptyPlate from '../../assets/foodCard/empty_plate.png'
+import { Link } from "react-router-dom";
+import { useLocalData } from "../../../utils/hooks/useLocaldata";
+import { ShimmerUi } from "./ShimmerUi";
 
 export const Search = ()=>{
 
-     const [menuItems,setMenuItems] = useState(foodItems);
+     const {menuItems,setMenuItems} = useLocalData();
      const [inputText,setInputText] = useState('');
-     const [notFound,setNotFound] = useState('hidden')
+     const [notFound,setNotFound] = useState('hidden');
+     const [bgClr,setBgclr] = useState('');
+     const [border,setBorder] = useState('all');
 
      const searchItems = ()=>{
          const searchResult = foodItems.filter(items=>(items.name.toLowerCase()).includes(inputText.toLowerCase()))
           setMenuItems(searchResult);
+          setBorder('')
           if(searchResult.length === 0){
             setNotFound('flex')
           }
@@ -23,8 +29,20 @@ export const Search = ()=>{
             
          
      }
-
-    return(
+     const searchCatagory=(cat)=>{
+        const catagory = foodItems.filter(items=>(items.name.toLowerCase()).includes(cat.toLowerCase()));
+        setMenuItems(catagory);
+        setBorder('')
+        if(catagory.length === 0){
+          setNotFound('flex')
+        }
+        else{
+          setNotFound('hidden')
+        }
+      
+     }
+     
+    return menuItems === null ? <ShimmerUi/>:(
         <section>
             <div className='flex gap-1 items-center mt-20 justify-center'>
                 <input className="bg-red-200 text-black placeholder:text-black placeholder:text-lg w-[50%] pl-5 py-5 rounded-full" type="text" placeholder="Search items" 
@@ -36,31 +54,48 @@ export const Search = ()=>{
                       onChange={event=>setInputText(event.target.value)}
                 />
                 <img className="cursor-pointer" src={search} alt="search-img" 
-                    onClick={searchItems}
+                    onClick={()=>{
+                        searchItems();
+                        setBgclr('')      
+                    }}
                 />
             </div>
-            <div className="grid grid-flow-col gap-y-5 mt-10 ">
+            <div className="grid grid-flow-col gap-x-2 gap-y-5 mt-10 ">
             {
-                catagory.map(cat=>
+                catagory.map((cat,index)=>
                                     
-                 <div key={cat.name} className="flex py-5 flex-col gap-y-2 hover:bg-yellow-50 rounded-xl cursor-pointer  items-center">
-                    <div className=""><img width={50} height={50}  src={cat.img} alt="" /></div>
+                 <div key={cat.name} className={`${bgClr === index ? 'bg-yellow-100' : 'bg-white'} flex py-5 flex-col gap-y-2 hover:bg-yellow-100 rounded-xl cursor-pointer  items-center `}
+                    onClick={()=>{
+                        searchCatagory(cat.name);
+                        setBgclr(index)
+                    }}
+                 >
+                    <div className=""><img width={50} height={50}  src={cat.img} alt=""/></div>
                     <p className="text-lg text-green-950">{cat.name}</p>
                 </div>
                 )
             }
            </div>
 
-            <div className="flex gap-3 ">
+            <div className="flex gap-3 mt-10 ">
 
-                <p className="cursor-pointer"
-                    onClick={()=>{setMenuItems(foodItems)}}
+                <p className={`cursor-pointer text-xl font-bold ${border === 'all' ? 'border-b-4 border-b-black' : ''}`}
+                    onClick={()=>{
+                        setBorder('all')  
+                        setMenuItems(foodItems);
+                        setBgclr('');
+                        setNotFound('hidden')
+                    }}
 
                 >All</p>  
-                <p className="text-red-400 cursor-pointer"
+                <p className={`text-red-400 cursor-pointer  text-xl font-bold ${border === 'topRated' ? 'border-b-4 border-black' : ''} `}
                     onClick={()=>{
                        const topRatedRes = foodItems.filter(items=>items.ratings>4.4);
-                       setMenuItems(topRatedRes)
+                       setMenuItems(topRatedRes);
+                       setBorder('topRated');
+                       setBgclr('');
+                       setNotFound('hidden')
+                       
                        
                     }}          
                 >Top Rated</p>
@@ -90,7 +125,7 @@ export const Search = ()=>{
                           </div>
                             
                         </div>
-                        <button className="bg-orange-500 text-white text-xl py-2 px-5 mt-3 font-bold rounded-lg">Order Now</button>
+                        <Link to={'/checkout/'+items.id}><button className="bg-orange-500 text-white text-xl py-2 px-5 mt-3 font-bold rounded-lg">Order Now</button></Link>
                       </div>
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 const foodItems = [
   {
-    id: 1,
+    id: 11479,
     name: "Cheese Burst Pizza",
     price: 299,
     discountPrice: 249,
