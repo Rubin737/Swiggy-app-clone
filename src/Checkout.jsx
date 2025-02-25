@@ -1,21 +1,25 @@
-import add from '../src/assets/checkout/add.png';
-import minus from "../src/assets/checkout/minus.png";
-import { useFetchData } from '../utils/hooks/useFetchData';
-import { ShimmerUi } from './Components/NavElements/ShimmerUi';
-import { moneyConvert } from '../utils/moneyConvert';
+import add from '../src/assets/checkout/add.png'
+import minus from "../src/assets/checkout/minus.png"
+import { useFetchData } from '../utils/hooks/useFetchData'
+import { ShimmerUi } from './Components/NavElements/ShimmerUi'
+import { moneyConvert } from '../utils/moneyConvert'
 import tag from '../src/assets/checkout/tag.png'
 import star from '../src/assets/checkout/star.png'
-import down from '../src/assets/checkout/down.png';
-import up from '../src/assets/checkout/up.png';
-import { useState } from 'react';
+import down from '../src/assets/checkout/down.png'
+import up from '../src/assets/checkout/up.png'
+import { useState } from 'react'
+import emptyPlate from '../src/assets/foodCard/empty_plate.png'
+
 
 export const Checkout = ()=>{
     
    const {menuDetails,Recom,setRecom,original} = useFetchData();
-   const [btnClr,setBtnClr] = useState('');
+   const [vegBtn,setVegBtn] = useState('bg-red-500')
+   const [nonVegBtn,setNonVegBtn] = useState('bg-red-500');
+   const [bestBtn,setBestBtn] = useState('bg-red-500');
+   const [empty,setEmpty] = useState('notEmpty');
 
    if (!menuDetails) return <ShimmerUi/>;
-   
     const {
         name,totalRatingsString,costForTwoMessage,cuisines,areaName
        ,sla:{slaString},city,cloudinaryImageId
@@ -24,7 +28,14 @@ export const Checkout = ()=>{
 
    const filterItems = (param) =>{
     const items = original.filter(recItems=>recItems.card.info.itemAttribute.vegClassifier === param);
-    setRecom(items)
+    
+    if(items.length === 0){
+        setEmpty('empty')
+        setRecom(items)        
+    }else{
+         setRecom(items)    
+    }
+    
    }
 
    const bestSeller = ()=>{
@@ -33,7 +44,46 @@ export const Checkout = ()=>{
      })
      setRecom(best)
    }
-    
+
+   const changeColorVeg = (clr,type)=>{
+        if(clr==='bg-red-500'){
+            setVegBtn('bg-slate-400');
+            filterItems(type);
+            setNonVegBtn('bg-red-500');
+            setBestBtn('bg-red-500');
+        }
+        else{
+            setVegBtn('bg-red-500')
+            setRecom(original)
+        }
+   }
+   
+   const changeColorNonVeg = (clr,type)=>{
+    if(clr==='bg-red-500'){
+        setNonVegBtn('bg-slate-400');
+        filterItems(type);
+        setVegBtn('bg-red-500');
+        setBestBtn('bg-red-500');
+    }
+    else{
+        setNonVegBtn('bg-red-500')
+        setRecom(original)
+    }
+  }
+
+  const changeColorBest = (clr)=>{
+    if(clr==='bg-red-500'){
+        setBestBtn('bg-slate-400');
+        setNonVegBtn('bg-red-500');
+        setVegBtn('bg-red-500');
+        bestSeller()
+    }
+    else{
+        setBestBtn('bg-red-500')
+        setRecom(original)
+    }
+  }
+
     const imgId = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${cloudinaryImageId}`;
     
     return(
@@ -49,7 +99,7 @@ export const Checkout = ()=>{
                         <p className='text-xl'>1</p>
                         <img width={20} src={minus} alt="" />
                     </div>
-                    <button className='text-lg bg-orange-500 px-10 rounded-sm py-1'>ADD</button>
+                    <button className='text-lg bg-orange-500 px-10 rounded-md  py-1'>ADD</button>
                      <img width={100} height={100} className='object-cover' src={imgId} alt="" />
                     
                 </div>
@@ -62,18 +112,21 @@ export const Checkout = ()=>{
               <div className=''>
                 
                 <div className='flex gap-5 mb-2'>
-                    <button onClick={()=>{
-                        filterItems('VEG');
-                        setBtnClr('bg-slate-400')
+                    <button className={`font-bold text-xl ${vegBtn}  px-5 py-2 rounded-md text-white`}
+                     onClick={()=>{
 
-                    }} className={`font-bold text-xl ${btnClr === 'bg-red-500' ? 'bg-slate-400' : 'bg-red-500'} px-5 py-2 rounded-md text-white`}>Pure-Veg</button>
+                        changeColorVeg(vegBtn,'VEG')
+
+                    }}>Pure-Veg</button>
+              
+                    <button className={`font-bold text-xl  ${nonVegBtn}  px-5 py-2 rounded-md text-white`} 
+                    onClick={()=>{
+                        changeColorNonVeg(nonVegBtn,"NONVEG")
+                    }}>Non-Veg</button>
+               
                     <button onClick={()=>{
-                        filterItems('NONVEG');
-                        
-                    }} className='font-bold text-xl  bg-red-500 px-5 py-2 rounded-md text-white'>Non-Veg</button>
-                    <button onClick={()=>{
-                        bestSeller()
-                    }} className='font-bold text-xl  bg-red-500 px-5 py-2 rounded-md text-white'>Best seller</button>
+                        changeColorBest(bestBtn)
+                    }} className={`font-bold text-xl ${bestBtn} px-5 py-2 rounded-md text-white`}>Best seller</button>
                 </div>
                 {
                     Recom.map(recItems=>{
@@ -99,10 +152,11 @@ export const Checkout = ()=>{
                                 <img  src={vegClassifier === 'VEG' ? up : down} alt="" width={30}/>
                                  <p className='text-md font-bold text-red-800'>₹ {moneyConvert(price)}</p>
                                 </div>
-                                <div className='flex gap-5'>
+                                <div className='flex gap-5  items-center '>
                                     <p className='text-xl font-bold'>{name}</p>
-                                    <div className='flex ite ms-center gap-1'><img width={20} src={tag} alt="" />
-                                    <p>{recItems.card.info.offerTags[1].title}({recItems.card.info.offerTags[1].subTitle})</p>
+                                    <div className='flex gap-2 object-cover items-center'>
+                                        <img width={20} height={20} src={tag} alt="" />
+                                        <p>60% OFF (use STEALDEAL)</p>
                                     </div>
                                 </div>
                                 <div className='flex items-center gap-2'><img src={star} alt="" /><p>{rating}({ratingCount})</p></div>
@@ -113,11 +167,16 @@ export const Checkout = ()=>{
                                 <button className='bg-white border shadow-md shadow-slate-300 text-green-300 px-10 py-2 text-xl font-bold rounded-md -mt-10'>Add</button>
                             </div>
                         </div>
-
+                        
                         )
                     })
                 }
                
+              </div>
+
+              <div className={` ${empty === 'notEmpty' ? 'hidden ' : ' flex flex-col gap-5 justify-center items-center mt-10 mb-10'} `}>
+                 <img src={emptyPlate} className="w-[200px]" alt="" />
+                 <p className="text-2xl font-bold text-red-500">Currently Not Available</p>
               </div>
                
         </section>
