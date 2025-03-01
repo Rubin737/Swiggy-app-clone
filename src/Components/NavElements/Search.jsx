@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { useLocalData } from "../../../utils/hooks/useLocaldata";
 import { ShimmerUi } from "./ShimmerUi";
 
-export const Search = ()=>{
+ const Search = ()=>{
 
      const {menuItems,setMenuItems} = useLocalData();
      const [inputText,setInputText] = useState('');
@@ -141,3 +141,4 @@ export const Search = ()=>{
         </section>
     )
 }
+export default Search;

@@ -18,6 +18,7 @@ export const Checkout = ()=>{
    const [nonVegBtn,setNonVegBtn] = useState('bg-red-500');
    const [bestBtn,setBestBtn] = useState('bg-red-500');
    const [empty,setEmpty] = useState('notEmpty');
+   
 
    if (!menuDetails) return <ShimmerUi/>;
     const {
@@ -33,7 +34,8 @@ export const Checkout = ()=>{
         setEmpty('empty')
         setRecom(items)        
     }else{
-         setRecom(items)    
+         setRecom(items);
+         setEmpty('notEmpty')    
     }
     
    }
@@ -42,7 +44,13 @@ export const Checkout = ()=>{
      const best = original.filter(recItems=>{
         return recItems.card.info.ratings.aggregatedRating.rating > 4.2
      })
-     setRecom(best)
+     if(best.length === 0){
+        setEmpty('empty')
+        setRecom(best)        
+    }else{
+         setRecom(best);
+         setEmpty('notEmpty')    
+    }
    }
 
    const changeColorVeg = (clr,type)=>{

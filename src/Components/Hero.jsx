@@ -10,7 +10,6 @@ export const Hero = () => {
     const [bgClr, setBgclr] = useState(0); 
     const [bodyClr, setBodyClr] = useState('bg-pink-100');
 
-    console.log(currIntex);
 
     const prevItem = () => {
         if (currIntex > 0) {
