@@ -1,7 +1,7 @@
 import { contactDetails } from "../../../utils/hooks/contactDetails"
 export const About = ()=>{
     return(
-        <section>
+        <section className="mt-[150px]">
             
             <div className="flex justify-center items-center flex-col  mt-10">
             <h1 className="text-4xl font-bold mb-5 text-orange-500">About us</h1>

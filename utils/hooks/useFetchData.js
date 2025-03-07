@@ -1,15 +1,12 @@
-import { useParams } from "react-router-dom";
 import { MENU_API } from "../menu";
 import { useEffect, useState } from "react";
 
-
-export const useFetchData = () => {
+export const useFetchData = (parameter) => {
 
     const[menuDetails,setMenuDetails] = useState(null);
-    const {parameter} = useParams();
     const [Recom,setRecom] = useState();
     const [original,setOriginal] = useState()
-    
+    const[related,setRelated] = useState()    
 
     useEffect(()=>{
         
@@ -21,18 +18,21 @@ export const useFetchData = () => {
          }
          const JsonData = await promise.json();
          setMenuDetails(JsonData);
-         const totalRecom = JsonData.data.cards[4].groupedCard.cardGroupMap.REGULAR.cards[2].card.card.itemCards
+         const totalRecom = JsonData.data.cards[4].groupedCard.cardGroupMap.REGULAR.cards[1].card.card.itemCards
+         const relatedItems = JsonData.data.cards[4].groupedCard.cardGroupMap.REGULAR.cards;
+         setRelated(relatedItems)
          setRecom(totalRecom);
          setOriginal(totalRecom)
+
 
        } catch (error) {
          console.log(error.message);
        }
     }
     fetchData()
-},[])
+},[parameter])
 
-return {menuDetails,Recom,setRecom,original};
+return {menuDetails,Recom,setRecom,original,related,setRelated};
      
 }
 

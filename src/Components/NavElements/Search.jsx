@@ -43,7 +43,7 @@ import { ShimmerUi } from "./ShimmerUi";
      }
      
     return menuItems === null ? <ShimmerUi/>:(
-        <section>
+        <section className="mt-[150px]">
             <div className='flex gap-1 items-center mt-20 justify-center'>
                 <input className="bg-red-200 text-black placeholder:text-black placeholder:text-lg w-[50%] pl-5 py-5 rounded-full" type="text" placeholder="Search items" 
                     onKeyDown={event=>{

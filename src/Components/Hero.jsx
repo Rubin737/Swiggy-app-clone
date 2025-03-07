@@ -8,7 +8,7 @@ export const Hero = () => {
     const [currIntex, setCurIntex] = useState(0);
     const selectedItem = foodItems[currIntex];
     const [bgClr, setBgclr] = useState(0); 
-    const [bodyClr, setBodyClr] = useState('bg-pink-100');
+    const [bodyClr, setBodyClr] = useState('bg-lime-100');
 
 
     const prevItem = () => {
@@ -26,13 +26,13 @@ export const Hero = () => {
     };
 
     const updateBodyClr = (index) => {
-        const colors = ["bg-orange-100", "bg-yellow-100", "bg-orange-200", "bg-lime-100"];
+        const colors = ["bg-emarald-100", "bg-yellow-100", "bg-orange-200", "bg-lime-100"];
         setBodyClr(colors[index]);
         setBgclr(index); 
     };
 
     return (
-        <section className="pb-10">
+        <section className="pb-10 mt-[100px]">
             <section className={`flex my-5 py-10 px-5 justify-between items-center rounded-2xl ${bodyClr}`}>
                 <div className="w-[50%] flex flex-col ml-10 gap-2">
                     <h1 className="font-pop text-6xl font-extrabold">Fastest <span className="hero-h">Delivery</span> and Easy<span className="hero-h"> Pickup</span></h1>
