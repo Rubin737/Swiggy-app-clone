@@ -20,7 +20,6 @@ export const Header = ()=>{
     }
 
     const cartItems = useSelector((store)=>store.cart.items);
-    console.log(cartItems)
     
     
     return (
@@ -28,7 +27,7 @@ export const Header = ()=>{
         <header className=' bg-orange-300  fixed top-0 left-20  right-20 py-5 px-2 rounded-md z-50'>
             <nav className="flex justify-between items-center gap-5 ">
                 <div className='flex flex-row items-center'>
-                    <img src={resImg} alt="" className='header-img' />
+                    <img src={resImg} alt="" className='header-img cart-img' />
                     <h1 className='text-lg font-bold font-mono cursor-pointer hover:underline'
                         onClick={()=>changeUser()}
                     >Hi,{name}</h1>
@@ -44,11 +43,11 @@ export const Header = ()=>{
                 <div className='flex items-center gap-3'>
                     <Link to={'/cart'}>
                       <div className='relative'>
-                        <img src={cart} alt="cart" className='w-[50px]' />
-                        <p className='absolute text-lg font-bold text-slate-800 -top-4 left-[50%]'>{cartItems.length}</p>
+                        <img src={cart} alt="cartImg" className='w-[35px] ' />
+                        <p className='test-class absolute text-lg font-bold text-slate-800 -top-4 left-[50%]'>{cartItems.length}</p>
                        </div>
                      </Link> 
-                    <Link to={'/search'}><img src={search} alt="" className='header-img'/></Link>
+                    <Link to={'/search'}><img src={search} alt="search" className='header-img test-img'/></Link>
                     <img src={day} alt="" className='header-img'/>
 
                 </div>

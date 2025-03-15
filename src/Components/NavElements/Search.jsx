@@ -46,6 +46,7 @@ import { ShimmerUi } from "./ShimmerUi";
         <section className="mt-[150px]">
             <div className='flex gap-1 items-center mt-20 justify-center'>
                 <input className="bg-red-200 text-black placeholder:text-black placeholder:text-lg w-[50%] pl-5 py-5 rounded-full" type="text" placeholder="Search items" 
+                    data-testid='searchBar'
                     onKeyDown={event=>{
                         if(event.key === 'Enter'){
                             searchItems();
@@ -64,7 +65,7 @@ import { ShimmerUi } from "./ShimmerUi";
             {
                 catagory.map((cat,index)=>
                                     
-                 <div key={cat.name} className={`${bgClr === index ? 'bg-yellow-100' : 'bg-white'} flex py-5 flex-col gap-y-2 hover:bg-yellow-100 rounded-xl cursor-pointer  items-center `}
+                 <div key={cat.name} data-testid='cards' className={`${bgClr === index ? 'bg-yellow-100' : 'bg-white'} flex py-5 flex-col gap-y-2 hover:bg-yellow-100 rounded-xl cursor-pointer  items-center `}
                     onClick={()=>{
                         searchCatagory(cat.name);
                         setBgclr(index)
@@ -88,7 +89,7 @@ import { ShimmerUi } from "./ShimmerUi";
                     }}
 
                 >All</p>  
-                <p className={`text-red-400 cursor-pointer  text-xl font-bold ${border === 'topRated' ? 'border-b-4 border-black' : ''} `}
+                <p data-testid='topRated' className={`text-red-400 cursor-pointer  text-xl font-bold ${border === 'topRated' ? 'border-b-4 border-black' : ''} `}
                     onClick={()=>{
                        const topRatedRes = foodItems.filter(items=>items.ratings>4.4);
                        setMenuItems(topRatedRes);
@@ -102,10 +103,9 @@ import { ShimmerUi } from "./ShimmerUi";
             </div>
 
             <div className="grid grid-cols-4 gap-x-3 gap-y-5 mt-10">
-            
+
             {
                 
-
                 menuItems.map(items=>
                     
                     <div key={items.id} className='bg-orange-100 w-[275px] px-4 py-5  rounded-xl'>
@@ -115,7 +115,7 @@ import { ShimmerUi } from "./ShimmerUi";
                         
                     </div>
                      <div className="flex flex-col">
-                        <p className="font-bold text-xl">{items.name}</p>
+                        <p data-testid='foodName' className="font-bold text-xl">{items.name}</p>
                       <div >
                         <div className="flex gap-2  items-center justify-between">
                             <p className="font-bold">&#8377;{items.price} <small className="text-slate-600">{items.discountPrice}</small></p>
@@ -125,7 +125,7 @@ import { ShimmerUi } from "./ShimmerUi";
                           </div>
                             
                         </div>
-                        <Link to={'/checkout/'+items.id}><button className="bg-orange-500 text-white text-xl py-2 px-5 mt-3 font-bold rounded-lg">Order Now</button></Link>
+                        <Link to={'/checkout/'+items.id}><button data-testid='order' className="bg-orange-500 text-white text-xl py-2 px-5 mt-3 font-bold rounded-lg">Order Now</button></Link>
                       </div>
                     </div>
                 </div>

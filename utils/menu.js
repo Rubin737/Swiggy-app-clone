@@ -1,8 +1,7 @@
 
-
 export const foodItems = [
   {
-    id: 1,
+    id: 58049,
     name: "Masala Dosa",
     category: "Veg",
     cuisine: "South Indian",
@@ -13,7 +12,7 @@ export const foodItems = [
     link: "https://i.pinimg.com/474x/51/35/dc/5135dc39ac2bcd41b5f94ae173ff4ac8.jpg",
   },
   {
-    id: 2,
+    id: 133777,
     name: "Schezwan Noodles",
     category: "Veg",
     cuisine: "Chinese",
@@ -35,7 +34,7 @@ export const foodItems = [
   //   link: "https://i.pinimg.com/736x/26/5e/cb/265ecb4913c5d3e5398d09948b1b4c18.jpg",
   // },
   {
-    id: 4,
+    id: 918653,
     name: "Hyderabadi Biryani",
     category: "Non-Veg",
     cuisine: "Biryani",
@@ -46,7 +45,7 @@ export const foodItems = [
     link: "https://i.pinimg.com/736x/a4/66/9a/a4669a419a1d51fc927182f6660bfb3e.jpg",
   },
   {
-    id: 5,
+    id: 542182,
     name: "Coco Cola",
     category: "Veg",
     cuisine: "Drinks",

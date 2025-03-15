@@ -15,11 +15,14 @@
 }
 
 .header-img{
-    @apply w-[40px] h-[40px] object-cover
+    @apply w-[30px] h-[30px] object-cover
 }
 .hero-h{
     @apply font-pop text-yellow-600;
 }
 .shimmer-ui{
     @apply bg-slate-200 rounded-xl h-[200px] animate-bounce;
+}
+.flex-container{
+    @apply flex justify-between items-center;
 }

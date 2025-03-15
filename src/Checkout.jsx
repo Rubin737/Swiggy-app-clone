@@ -1,5 +1,3 @@
-import add from '../src/assets/checkout/add.png'
-import minus from "../src/assets/checkout/minus.png"
 import { useFetchData } from '../utils/hooks/useFetchData'
 import { ShimmerUi } from './Components/NavElements/ShimmerUi'
 import {  useState } from 'react'
@@ -11,11 +9,13 @@ import { ShowRelated } from './ShowRelated'
 
 export const Checkout = ()=>{
    const { parameter } = useParams();
+   const [nonVegBtn,setNonVegBtn] = useState('bg-red-500');
    const {menuDetails,Recom,setRecom,original} = useFetchData(parameter);
    const [vegBtn,setVegBtn] = useState('bg-red-500')
-   const [nonVegBtn,setNonVegBtn] = useState('bg-red-500');
    const [bestBtn,setBestBtn] = useState('bg-red-500');
-   const [empty,setEmpty] = useState('notEmpty'); 
+   const [empty,setEmpty] = useState('notEmpty');
+   
+   
    
    if (!menuDetails) return <ShimmerUi/>;
     const {
@@ -96,27 +96,15 @@ export const Checkout = ()=>{
         <section className=''>
             
         <div className=' flex flex-col  mt-20  pl-10 py-10 rounded-xl shadow-xl shadow-gray-900 w-[50%]'>
-              <div className='flex gap-5 items-center'><h1 className="text-4xl font-bold">{name}</h1><p className='text-lg text-blue-800'>{costForTwoMessage}</p></div>
+              <div className='flex gap-5 items-center'><h1 data-testid='name' className="text-4xl font-bold">{name}</h1><p className='text-lg text-blue-800'>{costForTwoMessage}</p></div>
               <div className='flex gap-5 items-center'><p className='text-lg'>{totalRatingsString}</p><p className='underline text-red-600 text-lg'>{cuisines.join(',')}</p></div>
-              
-               <div className='flex items-center gap-5'>
-                    
-                    <div className='flex items-center  gap-5 border-2 px-5 py-1 '>
-                        <img width={20} src={add} alt="" />
-                        <p className='text-xl'>1</p>
-                        <img width={20} src={minus} alt="" />
-                    </div>
-                    <button className='text-lg bg-orange-500 px-10 rounded-md  py-1'>ADD</button>
-                     <img width={80} height={75} className='object-contain rounded-md' src={imgId} alt="" />
-                    
-                </div>
                 
               <p>Outlet : <strong>{areaName},{city}</strong></p>
               <p>Delivery time : <strong>{slaString}</strong></p>
               
         </div>
              <div className='my-10 flex gap-5 items-center'>
-                    <h1 className=' text-3xl font-bold text-slate-500'>Recomentations</h1>
+                    <h1 data-testId='recom' className=' text-3xl font-bold text-slate-500'>Recomentations</h1>
                     <Link to={'/seeAllRecomendations/'+ id}><h1 className=' font-bold text-red-800 cursor-pointer underline'>See all related items</h1></Link>
               </div>
               <div className=''>

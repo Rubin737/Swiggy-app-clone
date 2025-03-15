@@ -3,46 +3,66 @@ import add from'../../assets/checkout/add.png';
 import minus from '../../assets/checkout/minus.png'
 import { moneyConvert } from "../../../utils/moneyConvert";
 import close from '../../assets/foodCard/close.png';
-import { clearItems, removeItems } from "../../../utils/Slices/cartSlice";
+import { clearItems, removeItems,increasePrice,decreasePrice,calculateTotal } from "../../../utils/Slices/cartSlice";
 import { EmptyCart } from "./EmptyCart";
+import { Payment } from "./Payment";
+
 
 export const Cart = ()=>{
 
+    
+
     const menuDetails = useSelector((store)=>store.cart.items);
-    console.log(menuDetails.length)
+    
+
     const dispatch = useDispatch();
     
     const handleRemoveBtn = (eachItems)=>{
       dispatch(removeItems(eachItems))
+      dispatch(calculateTotal())          
     }
     const handleClearBtn = ()=>{
         dispatch(clearItems())
     }
     
     if(menuDetails.length===0) return <EmptyCart/>
-
+    
+    const handlePlusBtn = (id)=>{
+        dispatch(increasePrice(id))
+        dispatch(calculateTotal())     
+    }
+    const handleMinusBtn = (id)=>{
+        dispatch(decreasePrice(id))
+        dispatch(calculateTotal())     
+    }
     
     
     return (
-        <section>
+        <section className="mt-[80px]">
+            <Payment/>
             <div className="flex justify-end mt-5">
             <button className="bg-red-400 px-5 py-2 rounded-md text-white items-center font-bold"
                 onClick={()=>handleClearBtn()}
             >Clear cart</button>
             </div>
-            {menuDetails.map((eachItems,index) => {
+            {menuDetails.map((eachItems) => {
+               
                 const imgUrl = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${eachItems.imageId}`;
                 return (
 
                     <div 
-                        key={index}
-                        className="flex border w-[70%] px-3 shadow-lg shadow-slate-500 gap-x-10 mt-10 py-3 "
+                        key={eachItems.id}
+                        className="border flex justify-center border-black  w-[70%] px-3 shadow-lg shadow-slate-500 gap-x-10 mt-10 py-3 "
                     >
                         
                         <div className="flex rounded-md flex-col items-center justify-between bg-slate-100 p-5">
-                            <img src={add} alt="addSymbol" className="w-[30px]" />
-                            <p>1</p>
-                            <img className="w-[30px]" src={minus} alt="subSymbol" />
+                            <img src={add} alt="addSymbol" className="w-[30px]"
+                                onClick={()=>handlePlusBtn(eachItems.id)}
+                            />
+                            <p>{eachItems.quantity}</p>
+                            <img className="w-[30px]" src={minus} alt="subSymbol"
+                                onClick={()=>handleMinusBtn(eachItems.id)}
+                            />
                         </div>
     
                         

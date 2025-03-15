@@ -4,10 +4,11 @@ import down from '../src/assets/checkout/down.png'
 import up from '../src/assets/checkout/up.png';
 import tag from '../src/assets/checkout/tag.png'
 import { useDispatch } from "react-redux";
-import { addItems } from "../utils/Slices/cartSlice";
+import { addItems,calculateTotal } from "../utils/Slices/cartSlice";
+import { useState } from "react";
 
 export const ShowRelated = (eachItems) => {
-    
+    const[addBtn,setAddBtn] = useState(true)    
     const {
         imageId,
         description = "Delicious, fresh, and crafted with the finest ingredients! Whether you're craving a hearty meal, a quick snack, or a sweet treat, our menu offers a variety of flavors to satisfy every craving.",
@@ -24,9 +25,12 @@ export const ShowRelated = (eachItems) => {
     const dispatch = useDispatch();
 
     const handleAddBtn = (items)=>{
+        setAddBtn(false)
+        setTimeout(()=>{setAddBtn(true)},300)
         dispatch(addItems(items));
+        dispatch(calculateTotal())
     }
-        
+    
 
     return (
         
@@ -68,7 +72,7 @@ export const ShowRelated = (eachItems) => {
                         className="bg-white border shadow-md shadow-slate-300 text-green-300 px-10 py-2 text-xl font-bold rounded-md -mt-10"
                         onClick={()=>handleAddBtn(eachItems.items.card.info)}         
                     >
-                        Add
+                        {addBtn?'Add':'+1'}
                     </button>
                 </div>
             </div>
